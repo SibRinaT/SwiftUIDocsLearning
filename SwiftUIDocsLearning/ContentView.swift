@@ -8,41 +8,47 @@
 import SwiftUI
 
 struct ContentView: View {
+    var landmark: Landmark
+
     var body: some View {
-        VStack {
-            MapView()
-                .frame(height: 300)
-            CircleImage()
-                .offset(y: -130)
-                .padding(.bottom, -130)
+        ScrollView {
             VStack {
-                VStack (alignment: .leading) {
-                    Text("Tatarstan")
-                        .font(.title)
-                    HStack {
-                        Text("Best region in Russia")
-                            .font(.subheadline)
-                        Spacer()
-                        Text("Russia")
-                            .font(.subheadline)
-                    }
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                    
-                    Divider()
-                    // commit
-                    Text("About Tatarstan")
-                        .font(.title2)
-                    Text("Descriptive text goes here.")
-                }
-                .padding()
+                MapView(coordinate: landmark.locationCoordinate)
+                    .frame(height: 300)
                 
-                Spacer()
+                CircleImage(image: landmark.image)
+                    .offset(y: -130)
+                    .padding(.bottom, -130)
+                VStack {
+                    VStack (alignment: .leading) {
+                        Text("Tatarstan")
+                            .font(.title)
+                        HStack {
+                            Text(landmark.park)
+                                .font(.subheadline)
+                            Spacer()
+                            Text(landmark.state)
+                                .font(.subheadline)
+                        }
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        
+                        Divider()
+                        // commit
+                        Text("About \(landmark.name)")
+                            .font(.title2)
+                        Text(landmark.description)
+                    }
+                    .padding()
+                    Spacer()
+                }
+                .navigationTitle(landmark.name)
+                .navigationBarTitleDisplayMode(.inline)
             }
         }
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView(landmark: landmarks[0])
 }
